@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebNote - 在线记事本</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="header-left">
+                    <h1 class="title" data-i18n="title">WebNote</h1>
+                    <p class="subtitle" data-i18n="subtitle">快速、安全的在线记事本</p>
+                </div>
+                <button id="langSwitch" class="lang-switch-btn" data-i18n="langSwitch">English</button>
+            </div>
+        </header>
+
+        <main class="editor-section">
+            <div class="editor-container">
+                <textarea 
+                    id="noteContent" 
+                    class="note-editor" 
+                    data-i18n-placeholder="editor.placeholder"
+                    placeholder="在这里输入您的笔记内容..."
+                    rows="15"
+                ></textarea>
+            </div>
+            
+            <div class="actions">
+                <button id="createBtn" class="btn btn-primary">
+                    <span class="btn-text" data-i18n="editor.createBtn">创建笔记</span>
+                    <span class="btn-icon">✨</span>
+                </button>
+            </div>
+
+            <div id="result" class="result hidden">
+                <div class="result-content">
+                    <h3 data-i18n="editor.successTitle">笔记创建成功！</h3>
+                    <p><span data-i18n="editor.expiryText">您的笔记将在</span> <span id="expiryDate"></span> <span data-i18n="editor.expiresAt">过期</span></p>
+                    <div class="link-container">
+                        <input 
+                            type="text" 
+                            id="noteUrl" 
+                            class="url-input" 
+                            readonly 
+                            value=""
+                        >
+                        <button id="copyBtn" class="btn btn-secondary" data-i18n="editor.copyBtn">
+                            复制链接
+                        </button>
+                    </div>
+                    <a id="openBtn" href="" target="_blank" class="link-text" data-i18n="editor.openNote">
+                        点击打开笔记 →
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <section class="features">
+            <div class="feature">
+                <div class="feature-icon">📝</div>
+                <h3 data-i18n="features.simple.title">简单易用</h3>
+                <p data-i18n="features.simple.description">无需注册，直接开始记录</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h3 data-i18n="features.temporary.title">临时存储</h3>
+                <p data-i18n="features.temporary.description">笔记自动保存7天</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔗</div>
+                <h3 data-i18n="features.share.title">分享链接</h3>
+                <p data-i18n="features.share.description">一键生成分享地址</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p data-i18n="footer">WebNote - 您的临时记事本</p>
+        </footer>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

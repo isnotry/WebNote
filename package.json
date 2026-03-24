@@ -1,0 +1,17 @@
+{
+  "name": "webnote",
+  "version": "1.0.0",
+  "description": "Online notepad application with temporary notes",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["notepad", "temporary", "notes"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  }
+}
