@@ -2,7 +2,7 @@
 
 一个简单、安全的在线记事本应用，支持临时存储笔记并生成分享链接。
 
-![WebNote](./images/screenshot.png)
+![WebNote](https://cdn.jsdelivr.net/gh/isnotry/WebNote@main/images/screenshot.png)
 
 ## 功能特性
 
