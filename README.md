@@ -10,7 +10,7 @@
 - 🌐 **双语支持** - 支持中文和英文界面
 - 📱 **响应式设计** - 适配各种设备屏幕
 
-![WebNote](./images/WebNote - Capture.png)
+![WebNote](./images/webnote-capture.png)
 
 ## 快速开始
 
