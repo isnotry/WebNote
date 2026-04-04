@@ -10,6 +10,8 @@
 - 🌐 **双语支持** - 支持中文和英文界面
 - 📱 **响应式设计** - 适配各种设备屏幕
 
+![WebNote](./images/WebNote - Capture.png)
+
 ## 快速开始
 
 ### 安装依赖
@@ -79,6 +81,7 @@ webnote/
 ### 创建笔记
 
 **请求**
+
 ```http
 POST /api/notes
 Content-Type: application/json
@@ -89,6 +92,7 @@ Content-Type: application/json
 ```
 
 **响应**
+
 ```json
 {
   "id": "uuid",
@@ -100,11 +104,13 @@ Content-Type: application/json
 ### 获取笔记
 
 **请求**
+
 ```http
 GET /api/notes/:id
 ```
 
 **响应**
+
 ```json
 {
   "id": "uuid",
@@ -155,7 +161,7 @@ MIT
 
 欢迎提交 Issue 和 Pull Request！
 
----
+***
 
 # WebNote - Online Notepad
 
@@ -238,6 +244,7 @@ webnote/
 ### Create Note
 
 **Request**
+
 ```http
 POST /api/notes
 Content-Type: application/json
@@ -248,6 +255,7 @@ Content-Type: application/json
 ```
 
 **Response**
+
 ```json
 {
   "id": "uuid",
@@ -259,11 +267,13 @@ Content-Type: application/json
 ### Get Note
 
 **Request**
+
 ```http
 GET /api/notes/:id
 ```
 
 **Response**
+
 ```json
 {
   "id": "uuid",
@@ -314,6 +324,6 @@ MIT
 
 Issues and Pull Requests are welcome!
 
----
+***
 
 **WebNote - Your temporary notepad**
