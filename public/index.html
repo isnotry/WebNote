@@ -5,6 +5,40 @@
     <meta name="color-scheme" content="only light">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebNote - 在线记事本</title>
+    <!-- SVG Symbol Sprite -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2" x2="12" y2="4"/>
+        <line x1="12" y1="20" x2="12" y2="22"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="2" y1="12" x2="4" y2="12"/>
+        <line x1="20" y1="12" x2="22" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </symbol>
+      <symbol id="icon-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="8" y1="13" x2="16" y2="13"/>
+        <line x1="8" y1="17" x2="16" y2="17"/>
+      </symbol>
+      <symbol id="icon-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </symbol>
+      <symbol id="icon-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </symbol>
+      <symbol id="icon-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 14.9 9.1 22 11 14.9 12.9 12 20 9.1 12.9 2 11 9.1 9.1 12 2"/>
+      </symbol>
+    </svg>
     <style>html{background:#F3EEE6;color:#2B2520}</style>
     <script>
         // Prevent FOUC: set theme AND inline bg BEFORE CSS loads
@@ -107,7 +141,9 @@
                     <p class="subtitle" data-i18n="subtitle">快速、安全的在线记事本</p>
                 </div>
                 <div class="header-actions">
-                    <button id="themeToggle" class="theme-toggle" title="切换主题">🌙</button>
+                    <button id="themeToggle" class="theme-toggle" title="切换主题" aria-label="切换主题">
+                        <svg class="icon-theme"><use href="#icon-moon"/></svg>
+                    </button>
                     <button id="langSwitch" class="lang-switch-btn" data-i18n="langSwitch">English</button>
                 </div>
             </div>
@@ -127,7 +163,7 @@
             <div class="actions">
                 <button id="createBtn" class="btn btn-primary">
                     <span class="btn-text" data-i18n="editor.createBtn">创建笔记</span>
-                    <span class="btn-icon">✨</span>
+                    <svg class="btn-icon-svg"><use href="#icon-sparkle"/></svg>
                 </button>
             </div>
 
@@ -156,17 +192,17 @@
 
         <section class="features">
             <div class="feature">
-                <div class="feature-icon">📝</div>
+                <svg class="feature-icon-svg"><use href="#icon-note"/></svg>
                 <h3 data-i18n="features.simple.title">简单易用</h3>
                 <p data-i18n="features.simple.description">无需注册，直接开始记录</p>
             </div>
             <div class="feature">
-                <div class="feature-icon">🔒</div>
+                <svg class="feature-icon-svg"><use href="#icon-lock"/></svg>
                 <h3 data-i18n="features.temporary.title">临时存储</h3>
                 <p data-i18n="features.temporary.description">笔记自动保存7天</p>
             </div>
             <div class="feature">
-                <div class="feature-icon">🔗</div>
+                <svg class="feature-icon-svg"><use href="#icon-link"/></svg>
                 <h3 data-i18n="features.share.title">分享链接</h3>
                 <p data-i18n="features.share.description">一键生成分享地址</p>
             </div>
@@ -184,12 +220,14 @@
             const toggle = document.getElementById('themeToggle');
             if (toggle) {
                 var cur = root.getAttribute('data-theme');
-                toggle.textContent = cur === 'dark' ? '☀️' : '🌙';
+                var svg = toggle.querySelector('svg use');
+                if (svg) svg.setAttribute('href', '#icon-' + (cur === 'dark' ? 'sun' : 'moon'));
                 toggle.addEventListener('click', function() {
                     var t = root.getAttribute('data-theme');
                     var n = t === 'dark' ? 'light' : 'dark';
                     root.setAttribute('data-theme', n);
-                    toggle.textContent = n === 'dark' ? '☀️' : '🌙';
+                    var u = svg && svg.getAttribute('href');
+                    if (svg) svg.setAttribute('href', '#icon-' + (n === 'dark' ? 'sun' : 'moon'));
                     localStorage.setItem('webnote-theme', n);
                 });
             }

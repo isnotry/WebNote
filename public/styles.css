@@ -74,7 +74,6 @@ body::before {
   height: 38px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,7 +144,40 @@ body::before {
   box-shadow: var(--shadow-md);
 }
 
-.feature-icon { font-size: 2.5rem; margin-bottom: 15px; }
+/* ============ SVG Icon Styles ============ */
+.icon-theme {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
+  transition: color .25s;
+}
+
+.feature-icon-svg {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-icon-svg {
+  width: 1.1em;
+  height: 1.1em;
+  color: currentColor;
+  flex-shrink: 0;
+}
+
+/* Theme-toggle variant in note.html nav-bar (smaller) */
+.nav-bar .theme-toggle {
+  width: 34px;
+  height: 34px;
+}
+.nav-bar .icon-theme {
+  width: 16px;
+  height: 16px;
+}
 
 .feature h3 {
   color: var(--text);
@@ -231,8 +263,6 @@ body::before {
 .btn-secondary:hover {
   background: var(--btn-secondary-hover);
 }
-
-.btn-icon { font-size: 1.2rem; }
 
 /* ============ Result ============ */
 

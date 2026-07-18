@@ -1,3 +1,4 @@
 node_modules/
+notes/
 server.log
-.DS_Store
+*.log

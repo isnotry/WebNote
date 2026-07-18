@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert(t('editor.createFailed') + error.message);
         } finally {
             createBtn.disabled = false;
-            createBtn.innerHTML = `<span class="btn-text">${t('editor.createBtn')}</span><span class="btn-icon">✨</span>`;
+            createBtn.innerHTML = `<span class="btn-text">${t('editor.createBtn')}</span><svg class="btn-icon-svg"><use href="#icon-sparkle"/></svg>`;
         }
     });
 

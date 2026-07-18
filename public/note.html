@@ -96,6 +96,23 @@
 }
 
     </style>
+    <!-- SVG Symbol Sprite -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2" x2="12" y2="4"/>
+        <line x1="12" y1="20" x2="12" y2="22"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="2" y1="12" x2="4" y2="12"/>
+        <line x1="20" y1="12" x2="22" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </symbol>
+    </svg>
     <link rel="stylesheet" href="/styles.css?v=2">
     <style>
         .note-viewer {
@@ -217,7 +234,9 @@
         <div class="nav-bar">
             <a href="/" class="back-link" id="backToHome">← 返回首页</a>
             <div style="display:flex;gap:8px;align-items:center">
-                <button id="themeToggle" class="theme-toggle" title="切换主题">🌙</button>
+                <button id="themeToggle" class="theme-toggle" title="切换主题" aria-label="切换主题">
+                    <svg class="icon-theme"><use href="#icon-moon"/></svg>
+                </button>
                 <button id="langSwitch" class="lang-switch-btn">English</button>
             </div>
         </div>
@@ -258,12 +277,13 @@
             const toggle = document.getElementById('themeToggle');
             if (toggle) {
                 var cur = root.getAttribute('data-theme');
-                toggle.textContent = cur === 'dark' ? '☀️' : '🌙';
+                var svg = toggle.querySelector('svg use');
+                if (svg) svg.setAttribute('href', '#icon-' + (cur === 'dark' ? 'sun' : 'moon'));
                 toggle.addEventListener('click', function() {
                     var t = root.getAttribute('data-theme');
                     var n = t === 'dark' ? 'light' : 'dark';
                     root.setAttribute('data-theme', n);
-                    toggle.textContent = n === 'dark' ? '☀️' : '🌙';
+                    if (svg) svg.setAttribute('href', '#icon-' + (n === 'dark' ? 'sun' : 'moon'));
                     localStorage.setItem('webnote-theme', n);
                 });
             }
