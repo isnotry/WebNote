@@ -2,31 +2,120 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="only light">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>查看笔记 - WebNote</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>html{background:#F3EEE6;color:#2B2520}</style>
+    <script>
+        // Prevent FOUC: set theme AND inline bg BEFORE CSS loads
+        (function(){
+            var t = localStorage.getItem('webnote-theme');
+            if (!t) {
+                t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', t);
+            // Set bg inline on html — highest specificity, no flash possible
+            document.documentElement.style.backgroundColor = t === 'dark' ? '#0E0E0E' : '#F3EEE6';
+            document.documentElement.style.color = t === 'dark' ? '#FFFFFF' : '#2B2520';
+        })();
+    </script>
     <style>
-        .hidden {
-            display: none !important;
-        }
+:root {
+  /* Heatherwick (亮色模式) */
+  --bg: #F3EEE6;
+  --surface: #EAE2D6;
+  --surface-raised: #E2D9CA;
+  --text: #2B2520;
+  --text-2: #6E6051;
+  --border: #D8CDBE;
+  --radius-sm: 3px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --primary: #B87333;
+  --primary-light: #C99A5B;
+  --primary-dark: #A05E22;
+  --primary-gradient: linear-gradient(135deg, #B87333 0%, #C99A5B 100%);
+  --success: #5B8C5A;
+  --danger: #B85C4A;
+  --on-primary: #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(120,80,40,.08);
+  --shadow-md: 0 4px 15px rgba(120,80,40,.12);
+  --shadow-lg: 0 10px 30px rgba(120,80,40,.12);
+  --bg-glow-1: radial-gradient(80vw 60vw at 80% 0%, rgba(184,115,51,.10), transparent 60%);
+  --bg-glow-2: radial-gradient(50vw 50vw at 0% 100%, rgba(140,140,140,.08), transparent 60%);
+  --header-text: var(--text);
+  --header-muted: var(--text-2);
+  --btn-secondary-bg: #DDD2C4;
+  --btn-secondary-text: var(--text);
+  --btn-secondary-hover: #D0C5B5;
+  --input-bg: #F7F3ED;
+}
 
+/* data-theme driven, no @media query needed */
+:root[data-theme="light"] {
+  --bg: #F3EEE6; --surface: #EAE2D6; --surface-raised: #E2D9CA;
+  --text: #2B2520; --text-2: #6E6051; --border: #D8CDBE;
+  --radius-sm: 3px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+  --primary: #B87333; --primary-light: #C99A5B; --primary-dark: #A05E22;
+  --primary-gradient: linear-gradient(135deg, #B87333 0%, #C99A5B 100%);
+  --success: #5B8C5A; --danger: #B85C4A;
+  --on-primary: #FFFFFF;
+  --shadow-sm: 0 1px 3px rgba(120,80,40,.08);
+  --shadow-md: 0 4px 15px rgba(120,80,40,.12);
+  --shadow-lg: 0 10px 30px rgba(120,80,40,.12);
+  --bg-glow-1: radial-gradient(80vw 60vw at 80% 0%, rgba(184,115,51,.10), transparent 60%);
+  --bg-glow-2: radial-gradient(50vw 50vw at 0% 100%, rgba(140,140,140,.08), transparent 60%);
+  --header-text: #2B2520;
+  --header-muted: #6E6051;
+  --btn-secondary-bg: #DDD2C4;
+  --btn-secondary-text: #2B2520;
+  --btn-secondary-hover: #D0C5B5;
+  --input-bg: #F7F3ED;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0E0E0E; --surface: #161616; --surface-raised: #1E1E1E;
+  --text: #FFFFFF; --text-2: #BBBBBB; --border: #333333;
+  --radius-sm: 2px; --radius-md: 6px; --radius-lg: 10px; --radius-xl: 14px;
+  --primary: #FF6A00; --primary-light: #FFB066; --primary-dark: #CC5500;
+  --primary-gradient: linear-gradient(135deg, #FF6A00 0%, #FFB066 100%);
+  --success: #66BB6A; --danger: #EF5350;
+  --on-primary: #0E0E0E;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 15px rgba(0,0,0,.4);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.5);
+  --bg-glow-1: radial-gradient(120vw 120vw at 50% -10%, rgba(255,106,0,.10), transparent 55%);
+  --bg-glow-2: none;
+  --header-text: #FFFFFF;
+  --header-muted: #BBBBBB;
+  --btn-secondary-bg: #2A2A2A;
+  --btn-secondary-text: #FFFFFF;
+  --btn-secondary-hover: #3A3A3A;
+  --input-bg: #1A1A1A;
+}
+
+    </style>
+    <link rel="stylesheet" href="/styles.css?v=2">
+    <style>
         .note-viewer {
-            background: white;
+            background: var(--surface);
             padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
             min-height: 400px;
+            border: 1px solid var(--border);
         }
 
         .note-header {
             margin-bottom: 30px;
             padding-bottom: 20px;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 1px solid var(--border);
         }
 
         .note-meta {
-            color: #666;
-            font-size: 0.9rem;
+            color: var(--text-2);
+            font-size: .9rem;
             margin-top: 10px;
         }
 
@@ -36,15 +125,16 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 1.05rem;
             line-height: 1.8;
-            color: #333;
+            color: var(--text);
         }
 
         .back-link {
             display: inline-block;
             margin-bottom: 20px;
-            color: #667eea;
+            color: var(--primary);
             text-decoration: none;
             font-weight: 500;
+            transition: opacity .2s;
         }
 
         .back-link:hover {
@@ -59,20 +149,20 @@
         }
 
         .lang-switch-btn {
-            background: rgba(102, 126, 234, 0.1);
-            border: 2px solid rgba(102, 126, 234, 0.2);
-            color: #667eea;
+            background: color-mix(in srgb, var(--surface) 80%, transparent);
+            border: 1px solid var(--border);
+            color: var(--text);
             padding: 6px 14px;
             border-radius: 18px;
             cursor: pointer;
-            font-size: 0.85rem;
+            font-size: .85rem;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all .25s;
         }
 
         .lang-switch-btn:hover {
-            background: rgba(102, 126, 234, 0.2);
-            border-color: rgba(102, 126, 234, 0.3);
+            background: var(--surface);
+            border-color: var(--primary);
             transform: translateY(-2px);
         }
 
@@ -83,27 +173,53 @@
         .loading {
             text-align: center;
             padding: 60px 20px;
-            color: #666;
+            color: var(--text-2);
         }
 
         .error {
             text-align: center;
             padding: 60px 20px;
-            color: #dc3545;
+            color: var(--danger);
         }
 
         .copy-actions {
             margin-top: 30px;
             padding-top: 20px;
-            border-top: 2px solid #f0f0f0;
+            border-top: 1px solid var(--border);
         }
+
+        .theme-toggle {
+            background: color-mix(in srgb, var(--surface) 80%, transparent);
+            border: 1px solid var(--border);
+            color: var(--text);
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .25s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--surface);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle:active { transform: translateY(0); }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="nav-bar">
             <a href="/" class="back-link" id="backToHome">← 返回首页</a>
-            <button id="langSwitch" class="lang-switch-btn">English</button>
+            <div style="display:flex;gap:8px;align-items:center">
+                <button id="themeToggle" class="theme-toggle" title="切换主题">🌙</button>
+                <button id="langSwitch" class="lang-switch-btn">English</button>
+            </div>
         </div>
         
         <div class="note-viewer">
@@ -136,7 +252,24 @@
     </div>
 
     <script>
-        // i18n 翻译
+        // Theme toggle (init already done in head)
+        (function() {
+            const root = document.documentElement;
+            const toggle = document.getElementById('themeToggle');
+            if (toggle) {
+                var cur = root.getAttribute('data-theme');
+                toggle.textContent = cur === 'dark' ? '☀️' : '🌙';
+                toggle.addEventListener('click', function() {
+                    var t = root.getAttribute('data-theme');
+                    var n = t === 'dark' ? 'light' : 'dark';
+                    root.setAttribute('data-theme', n);
+                    toggle.textContent = n === 'dark' ? '☀️' : '🌙';
+                    localStorage.setItem('webnote-theme', n);
+                });
+            }
+        })();
+
+        // i18n translations
         const translations = {
             zh: {
                 backToHome: '← 返回首页',
@@ -169,7 +302,6 @@
 
         function setLanguage(lang) {
             localStorage.setItem('webnote-lang', lang);
-            // 不刷新页面，触发翻译更新事件
             window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
         }
 
@@ -189,43 +321,30 @@
             document.getElementById('copyContentBtn').textContent = t('copyContent');
         }
 
-        // 主初始化函数
         function init() {
             console.log('=== Initializing note viewer ===');
-
-            // 保存原始笔记数据以便切换语言时重新格式化
             window.currentNoteData = null;
-
             applyTranslations();
 
-            // 监听语言切换事件
             window.addEventListener('languageChanged', function(event) {
                 console.log('Language changed to:', event.detail.lang);
                 applyTranslations();
-
-                // 如果笔记已加载，重新格式化日期
                 if (window.currentNoteData) {
                     const lang = event.detail.lang;
-                    const createdAt = document.getElementById('createdAt');
-                    const expiresAt = document.getElementById('expiresAt');
-
-                    createdAt.textContent = new Date(window.currentNoteData.createdAt).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
-                    expiresAt.textContent = new Date(window.currentNoteData.expiresAt).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
+                    document.getElementById('createdAt').textContent = new Date(window.currentNoteData.createdAt).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
+                    document.getElementById('expiresAt').textContent = new Date(window.currentNoteData.expiresAt).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
                 }
             });
 
-            // 语言切换
             document.getElementById('langSwitch').addEventListener('click', function() {
                 const currentLang = getCurrentLanguage();
                 const newLang = currentLang === 'zh' ? 'en' : 'zh';
                 setLanguage(newLang);
             });
 
-            // 获取笔记ID
             const noteId = window.location.pathname.split('/').pop();
             console.log('Note ID:', noteId);
 
-            // 获取DOM元素
             const loading = document.getElementById('loading');
             const error = document.getElementById('error');
             const noteDisplay = document.getElementById('noteDisplay');
@@ -234,9 +353,6 @@
             const expiresAt = document.getElementById('expiresAt');
             const copyContentBtn = document.getElementById('copyContentBtn');
 
-            console.log('Elements found:', { loading, error, noteDisplay, noteContent, createdAt, expiresAt, copyContentBtn });
-
-            // 加载笔记
             async function loadNote() {
                 console.log('=== Starting to load note ===');
                 try {
@@ -258,26 +374,20 @@
                     console.log('Note data:', note);
                     console.log('Note content length:', note.content.length);
 
-                    // 保存笔记数据
                     window.currentNoteData = note;
-
                     noteContent.textContent = note.content;
                     console.log('Content set to element');
 
                     const lang = getCurrentLanguage();
-                    console.log('Formatting dates with language:', lang);
                     createdAt.textContent = new Date(note.createdAt).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
                     expiresAt.textContent = new Date(note.expiresAt).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
                     
-                    console.log('Hiding loading and error, showing note display');
                     loading.classList.add('hidden');
                     error.classList.add('hidden');
                     noteDisplay.classList.remove('hidden');
                     console.log('=== Note loaded successfully ===');
                 } catch (err) {
                     console.error('Error loading note:', err);
-                    console.error('Error stack:', err.stack);
-                    console.error('Error message:', err.message);
                     loading.classList.add('hidden');
                     error.classList.remove('hidden');
                     error.querySelector('p').textContent = err.message;
@@ -285,7 +395,6 @@
                 }
             }
 
-            // 复制功能
             copyContentBtn.addEventListener('click', async function() {
                 try {
                     await navigator.clipboard.writeText(noteContent.textContent);
@@ -307,11 +416,9 @@
                 }
             });
 
-            // 开始加载笔记
             loadNote();
         }
 
-        // 页面加载完成后执行
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', init);
         } else {
