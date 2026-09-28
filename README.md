@@ -174,7 +174,8 @@ WebNote/
 │   ├── script.js               # 创建页交互：校验、提交、复制链接
 │   └── styles.css              # 全站样式（主题令牌另在 HTML 的 <style> 里）
 ├── docs/
-│   └── screenshot.png          # README 用的界面截图
+│   ├── screenshot.png          # 中文界面截图（README.md 引用）
+│   └── screenshot-en.png       # 英文界面截图（README.en.md 引用）
 ├── notes/                      # 笔记数据目录，运行时生成，不进仓库
 ├── server.js                   # 全部后端逻辑
 ├── Dockerfile                  # node:18-alpine 镜像
@@ -192,7 +193,7 @@ WebNote/
 - 改端口：用环境变量 `PORT`，不要写死
 - 改主题色：暗色令牌在 `:root[data-theme="dark"]`，且 `index.html`、`note.html`、`expired.html`、`notfound.html` 的 `<head>` 各有一份内联副本，改一处要同步其余三处，否则首帧配色会不一致
 - 改样式缓存：`styles.css` 的引用带 `?v=2`，大改样式后把版本号加一
-- 加新文案：`zh` 和 `en` 两份词条都要补，`i18n.js` 里漏了会直接显示 key 本身
+- 加新文案：`zh` 和 `en` 两份词条都要补，`i18n.js` 里漏了会直接显示 key 本身；**空字符串是合法文案**（英文版 `editor.expiresAt` 就留空，因为英文语序里不需要尾词）
 - 跑开发模式：`npm run dev`，与 `npm start` 等价（都是直接 `node server.js`，没有文件监听）
 - 项目约定：前端不引入任何依赖、不引入构建步骤，样式用 CSS 变量而不是组件库
 

@@ -10,7 +10,7 @@
 
 > A no-sign-up online notepad — write a note, get a shareable link in one click, it self-destructs after 7 days, and everything stays on your own server.
 
-![Screenshot](https://cdn.jsdelivr.net/gh/isnotry/WebNote@main/docs/screenshot.png)
+![Screenshot](https://cdn.jsdelivr.net/gh/isnotry/WebNote@main/docs/screenshot-en.png)
 
 ---
 
@@ -174,7 +174,8 @@ WebNote/
 │   ├── script.js               # Create-page interactions: validation, submit, copy link
 │   └── styles.css              # Site-wide styles (theme tokens also live in each HTML <style>)
 ├── docs/
-│   └── screenshot.png          # Screenshot used by the READMEs
+│   ├── screenshot.png          # Chinese UI screenshot (used by README.md)
+│   └── screenshot-en.png       # English UI screenshot (used by README.en.md)
 ├── notes/                      # Note data directory, created at runtime, not committed
 ├── server.js                   # The entire backend
 ├── Dockerfile                  # node:18-alpine image
@@ -192,7 +193,7 @@ WebNote/
 - Change the port: use the `PORT` environment variable, never hard-code it
 - Change theme colours: the dark tokens live in `:root[data-theme="dark"]`, and `index.html`, `note.html`, `expired.html` and `notfound.html` each carry an inline copy in `<head>` — edit one, edit all four, or the first-frame colours will disagree
 - Change the style cache: `styles.css` is linked as `?v=2`; bump the number after a big style change
-- Add new copy: fill in both the `zh` and `en` dictionaries, otherwise `i18n.js` renders the raw key
+- Add new copy: fill in both the `zh` and `en` dictionaries, otherwise `i18n.js` renders the raw key; an **empty string is a valid value** (English leaves `editor.expiresAt` blank because the sentence needs no trailing word)
 - Run in development: `npm run dev`, identical to `npm start` (both run `node server.js` directly, with no file watcher)
 - Project conventions: no frontend dependencies, no build step, and CSS variables instead of a component library
 
