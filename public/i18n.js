@@ -55,6 +55,7 @@ const translations = {
             }
         },
         footer: 'WebNote - 您的临时记事本',
+        repoLink: 'GitHub 开源仓库',
         langSwitch: 'English'
     },
     en: {
@@ -113,6 +114,7 @@ const translations = {
             }
         },
         footer: 'WebNote - Your temporary notepad',
+        repoLink: 'Open source on GitHub',
         langSwitch: '中文'
     }
 };
