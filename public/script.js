@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('[data-i18n]').forEach(element => {
             const key = element.getAttribute('data-i18n');
             const translation = t(key);
-            if (translation) {
+            // 空字符串是合法文案（英文版 en.editor.expiresAt 就留空，因为语序里不需要尾词），
+            // 只有键完全没解析出来时才跳过，否则会残留 HTML 里的中文默认值
+            if (translation !== undefined && translation !== null) {
                 element.textContent = translation;
             }
         });
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
             const key = element.getAttribute('data-i18n-placeholder');
             const translation = t(key);
-            if (translation) {
+            if (translation !== undefined && translation !== null) {
                 element.placeholder = translation;
             }
         });
@@ -132,7 +134,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // 保存日期数据以便语言切换时重新格式化
             const expiry = new Date(data.expiresAt);
             expiryDate.setAttribute('data-date', data.expiresAt);
-            const lang = detectLanguage();
+            // 用用户选定的界面语言，而不是浏览器语言（否则英文界面会显示中文格式的日期）
+            const lang = getCurrentLanguage();
             expiryDate.textContent = expiry.toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
 
             result.classList.remove('hidden');
@@ -142,7 +145,8 @@ document.addEventListener('DOMContentLoaded', function() {
             alert(t('editor.createFailed') + error.message);
         } finally {
             createBtn.disabled = false;
-            createBtn.innerHTML = `<span class="btn-text">${t('editor.createBtn')}</span><svg class="btn-icon-svg"><use href="#icon-sparkle"/></svg>`;
+            // 补回 data-i18n：漏了它这个按钮就再也跟不上语言切换
+            createBtn.innerHTML = `<span class="btn-text" data-i18n="editor.createBtn">${t('editor.createBtn')}</span><svg class="btn-icon-svg"><use href="#icon-sparkle"/></svg>`;
         }
     });
 
